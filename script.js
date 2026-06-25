@@ -1,222 +1,411 @@
-const menu = document.getElementById("links_container"); // Get the menu container element
-const open = document.getElementById("menu-btn"); // Get the menu open button element
-const close = document.getElementById("close"); // Get the menu close button element
+const menu = document.getElementById("links_container");
+const openButton = document.getElementById("menu-btn");
+const closeButton = document.getElementById("close");
+const header = document.getElementById("header");
+const links = document.querySelectorAll(".nav-link");
 
-const nava = document.getElementById("header"); // Get the header element
+function openmenu() {
+  menu.classList.add("open");
+  openButton.style.display = "none";
+  closeButton.style.display = "block";
+  openButton.setAttribute("aria-expanded", "true");
+}
 
-const links = document.querySelectorAll("#nav-link"); // Get all elements with the ID 'link'
+function closemenu() {
+  menu.classList.remove("open");
+  openButton.style.display = "";
+  closeButton.style.display = "none";
+  openButton.setAttribute("aria-expanded", "false");
+}
 
-const tab_links = document.querySelectorAll(".tab-links"); // Get all elements with the class 'tab-links'
-const tab_contents = document.querySelectorAll(".tab-content"); // Get all elements with the class 'tab-content'
-
-AOS.init();
-
-// Add click event listener to each link
 links.forEach((link) => {
   link.addEventListener("click", () => {
-    if (close.style.display == "block") closemenu(); // Close the menu if it's open
-    links.forEach((link) => {
-      link.classList.remove("active-nav-link"); // Remove active class from all nav links
-    });
-    link.classList.add("active-nav-link"); // Add active class to clicked nav link
+    closemenu();
+    links.forEach((navLink) => navLink.classList.remove("active-nav-link"));
+    link.classList.add("active-nav-link");
   });
 });
 
-// Function to open the menu
-function openmenu() {
-  menu.style.left = "30%"; // Move menu into view
-  open.style.display = "none"; // Hide the open button
-  close.style.display = "block"; // Show the close button
-}
-
-// Function to close the menu
-function closemenu() {
-  menu.style.left = "100%"; // Move menu out of view
-  open.style.display = "block"; // Show the open button
-  close.style.display = "none"; // Hide the close button
-}
-
-// Change header style on scroll
-window.onscroll = function () {
-  if (window.scrollY >= 100) {
-    // If scrolled more than 100px
-    nava.style.background = "rgba(30,33,37,0.8)"; // Set background color
-    nava.style.zIndex = "999999"; // Set z-index
-    nava.style.boxShadow = "0px 0px 10px black"; // Add shadow
+window.addEventListener("scroll", () => {
+  if (window.scrollY >= 80) {
+    header.style.background = "rgba(16, 19, 22, 0.92)";
+    header.style.boxShadow = "0 16px 40px rgba(0, 0, 0, 0.25)";
   } else {
-    nava.style.background = "none"; // Remove background color
-    nava.style.zIndex = "999999"; // Set z-index
-    nava.style.boxShadow = "none"; // Remove shadow
+    header.style.background = "rgba(16, 19, 22, 0.72)";
+    header.style.boxShadow = "none";
   }
-};
-
-// Add click event listener to each tab link
-tab_links.forEach((tab_link) => {
-  tab_link.addEventListener("click", () => {
-    tab_links.forEach((tab_link) => {
-      tab_link.classList.remove("active-link"); // Remove active class from all tab links
-    });
-
-    tab_contents.forEach((tab_content) => {
-      tab_content.classList.remove("active-tab"); // Remove active class from all tab contents
-    });
-
-    tab_link.classList.add("active-link"); // Add active class to clicked tab link
-
-    document
-      .getElementById(tab_link.textContent.toLowerCase()) // Get the corresponding tab content
-      .classList.add("active-tab"); // Add active class to the corresponding tab content
-  });
 });
 
-// Initialize EmailJS with your User ID
-emailjs.init({
-  publicKey: "qMHmY9ldVNVeksvn2", // Your EmailJS public key
-  limitRate: {
-    // Set the limit rate for the application
-    id: "app",
-    // Allow 1 request per 10s
-    throttle: 15000,
-  },
-});
-
-// Function to send email
-function sendEmail(event) {
-  event.preventDefault(); // Prevent default form submission
-
-  // EmailJS Configuration
-  const SERVICE_ID = "service_dpy3quy"; // Your EmailJS service ID
-  const TEMPLATE_ID = "template_kaeqr8c"; // Your EmailJS template ID
-
-  // Collect form data
-  const name = document.querySelector("#username").value; // Get name from form
-  const email = document.querySelector("#email").value; // Get email from form
-  const subject = document.querySelector("#subject").value; // Get subject from form
-  const phone = document.querySelector("#phone").value; // Get phone from form
-  const message = document.querySelector("#message").value; // Get message from form
-
-  // Validate form fields
-  if (!name || !email || !subject || !message) {
-    alert("Please fill in all required fields"); // Alert if any required field is missing
-    return;
-  }
-
-  // EmailJS template parameters
-  const templateParams = {
-    from_name: name,
-    from_email: email,
-    subject: subject,
-    phone_number: phone,
-    message: message,
-  };
-
-  // Send email using EmailJS
-  emailjs
-    .send(SERVICE_ID, TEMPLATE_ID, templateParams)
-    .then((response) => {
-      console.log("Email sent successfully!", response.status, response.text); // Log success
-      alert("Your message was sent successfully!"); // Alert success
-      event.target.reset(); // Reset form after successful submission
-    })
-    .catch((error) => {
-      console.error("Email sending failed:", error); // Log error
-      alert("Failed to send message. Please try again."); // Alert failure
-    });
+function handleMissingIcon(img) {
+  const fallback = document.createElement("span");
+  fallback.className = "stack-tag icon-fallback-tag";
+  fallback.textContent = img.alt;
+  img.closest(".icon-container").replaceWith(fallback);
 }
 
-// Add event listener to form submission
-document.querySelector(".form").addEventListener("submit", sendEmail); // Attach sendEmail function to form submit event
+const toolGroups = [
+  {
+    title: "Design & Front-End",
+    tools: [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "React Native",
+      "HTML",
+      "CSS",
+      "Tailwind CSS",
+      "NativeWind",
+    ],
+  },
+  {
+    title: "Backend & APIs",
+    tools: [
+      "Python",
+      "FastAPI",
+      "Flask",
+      "REST APIs",
+      "API integration",
+      "Authentication flows",
+      "Environment variables",
+    ],
+  },
+  {
+    title: "Databases & Cloud",
+    tools: ["SQL", "PostgreSQL", "Supabase", "Firebase", "SQLAlchemy"],
+  },
+  {
+    title: "Data & AI",
+    tools: [
+      "Pandas",
+      "Data cleaning",
+      "Data analysis",
+      "Visualization",
+      "Embeddings",
+      "RAG",
+      "BeautifulSoup",
+      "Scrapy",
+    ],
+  },
+  {
+    title: "Dev Tools & Deployment",
+    tools: [
+      "Git",
+      "GitHub",
+      "VS Code",
+      "Postman",
+      "Netlify",
+      "Railway awareness",
+    ],
+  },
+  {
+    title: "IT & Infrastructure",
+    tools: ["Network troubleshooting", "Technical support", "User support"],
+  },
+];
 
-// Projects data
 const projects = [
   {
-    title: "Ecommerce App",
+    title: "AI-Powered Study Assistant",
+    status: "Prototype",
     description:
-      "VendorConnect is a cutting-edge Next JS e-commerce platform designed to empower vendors by providing a centralized portal to list, manage, and sell their products/services efficiently.",
-    image: "assets/images/vendor-connect-preview.png",
-    techStack: [
-      "<image src='assets/icons/ts.svg'/>",
-      "<image src='assets/icons/tail.svg'/>",
-      "<image src='assets/icons/next.svg'/>",
-      "<image src='assets/icons/c.svg'/>",
-      "<image src='assets/icons/sb.svg'/>",
+      "Built a NotebookLM-style study assistant that helps students organize notebooks, upload documents, and ask questions from their own study materials using retrieval-augmented generation.",
+    image: "assets/images/moscore-preview.png",
+    features: [
+      "Notebook creation and editing",
+      "PDF upload and text processing",
+      "Embeddings and RAG-based document chat",
+      "Supabase database integration and Firebase Storage",
     ],
+    stack: ["Next.js", "TypeScript", "Supabase", "Firebase", "Python"],
+    github: "https://github.com/tbrowns/moscore-web-app.git",
+  },
+  {
+    title: "VendorConnect Ecommerce App",
+    status: "Deployed",
+    description:
+      "Developed a vendor-focused ecommerce platform for listing products, managing inventory-style flows, and supporting customer purchasing experiences.",
+    image: "assets/images/vendor-connect-preview.png",
+    features: [
+      "Product listing experience",
+      "Vendor dashboard concept",
+      "Authentication-aware interface",
+      "Responsive product browsing",
+    ],
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
     github: "https://github.com/tbrowns/e-commerce",
     demo: "https://vendor-connect-delta.vercel.app/",
   },
   {
     title: "Wine Store Management App",
+    status: "Deployed",
     description:
-      "A Firebase-powered wine and spirit store management application",
+      "Created a Firebase-powered management app for tracking wine and spirits purchases, stock, payment status, and purchase history.",
     image: "assets/images/wine-app-preview.png",
-    techStack: [
-      "<image src='assets/icons/HTML.svg'/>",
-      "<image src='assets/icons/firebase.svg'/",
-      "<image src='assets/icons/javascript.svg'/>",
+    features: [
+      "Purchase history tracking",
+      "Stock and product views",
+      "Payment status labels",
+      "Firebase-backed data handling",
     ],
+    stack: ["HTML", "CSS", "JavaScript", "Firebase"],
     github: "https://github.com/tbrowns/wines-spirits",
     demo: "https://winesapp.netlify.app/",
   },
   {
-    title: "RAG Application",
+    title: "HisaFlow Kenyan Shares MVP",
+    status: "MVP concept",
     description:
-      "Moscore is a Next.js application for file upload and an AI learning assistant that enables users to chat with files.",
-    image: "assets/images/moscore-preview.png",
-    techStack: [
-      "<image src='assets/icons/ts.svg'/>",
-      "<image src='assets/icons/tail.svg'/>",
-      "<image src='assets/icons/next.svg'/>",
-      "<image src='assets/icons/c.svg'/>",
-      "<image src='assets/icons/sb.svg'/>",
+      "Designed and started building a Kenyan shares investment MVP focused on simple onboarding, amount-based share buying, portfolio tracking, and disciplined monthly investing.",
+    image: "assets/images/Screenshot 2024-11-27 151105.png",
+    features: [
+      "ID and KRA PIN onboarding concept",
+      "Mock CDS account flow",
+      "Amount-based share buying",
+      "Dividend and monthly investing concepts",
     ],
-    github: "https://github.com/tbrowns/moscore-web-app.git",
-    demo: "#",
+    stack: [
+      "React Native",
+      "NativeWind",
+      "FastAPI",
+      "PostgreSQL",
+      "SQLAlchemy",
+    ],
+  },
+  {
+    title: "Sign Language Recognition Prototype",
+    status: "Prototype",
+    description:
+      "Developed a sign language recognition prototype using MediaPipe hand landmarks and machine learning to explore assistive communication tools.",
+    image: "assets/images/contact-3018.png",
+    features: [
+      "Hand landmark detection",
+      "Gesture class dataset structure",
+      "RandomForest classifier experiments",
+      "Streamlit UI and speech experiments",
+    ],
+    stack: ["Python", "MediaPipe", "scikit-learn", "Streamlit", "OpenCV"],
+  },
+  {
+    title: "Job Scraper API Workflow",
+    status: "Project",
+    description:
+      "Built scraping workflows and API endpoints to collect, clean, and expose structured job listing data from public job sources.",
+    image: "assets/images/file.png",
+    features: [
+      "Scrapy spiders",
+      "BeautifulSoup and Requests workflows",
+      "Data cleaning and JSON export",
+      "FastAPI endpoint for structured listings",
+    ],
+    stack: ["Python", "FastAPI", "Pandas", "JSON"],
   },
 ];
 
-// Dynamically create project cards
-const projectGrid = document.querySelector(".project-grid");
-projects.forEach((project) => {
-  const projectCard = document.createElement("div");
-  projectCard.classList.add("project-card");
-  projectCard.setAttribute("data-aos", "fade-up");
-  projectCard.setAttribute("data-aos-duration", "750");
-  projectCard.setAttribute(
-    "data-aos-delay",
-    `${projects.indexOf(project) * 50 + 50}`
-  );
+const techIconMap = {
+  "Next.js": "assets/icons/next.svg",
+  React: "assets/icons/react.png",
+  "React Native": "assets/icons/react-native.svg",
+  TypeScript: "assets/icons/ts.svg",
+  JavaScript: "assets/icons/javascript.svg",
+  HTML: "assets/icons/HTML.svg",
+  CSS: "assets/icons/css.svg",
+  "Tailwind CSS": "assets/icons/tail.svg",
+  NativeWind: "assets/icons/nativewind.svg",
+  Python: "assets/icons/python.svg",
+  FastAPI: "assets/icons/fastapi.svg",
+  Flask: "assets/icons/flask.svg",
+  "REST APIs": "assets/icons/api.svg",
+  "API integration": "assets/icons/api.svg",
+  "Authentication flows": "assets/icons/auth.svg",
+  "Environment variables": "assets/icons/env.svg",
+  SQL: "assets/icons/sql.svg",
+  PostgreSQL: "assets/icons/postgresql.svg",
+  Supabase: "assets/icons/sb.svg",
+  Firebase: "assets/icons/firebase.svg",
+  SQLAlchemy: "assets/icons/sqlalchemy.svg",
+  Pandas: "assets/icons/pandas.svg",
+  "Data cleaning": "assets/icons/data-cleaning.svg",
+  "Data analysis": "assets/icons/data-analysis.svg",
+  Visualization: "assets/icons/visualization.svg",
+  Embeddings: "assets/icons/embeddings.svg",
+  RAG: "assets/icons/rag.svg",
+  BeautifulSoup: "assets/icons/beautifulsoup.svg",
+  Scrapy: "assets/icons/scrapy.svg",
+  MediaPipe: "assets/icons/mediapipe.svg",
+  OpenCV: "assets/icons/opencv.svg",
+  "scikit-learn": "assets/icons/scikit-learn.svg",
+  Streamlit: "assets/icons/streamlit.svg",
+  JSON: "assets/icons/json.svg",
+  Git: "assets/icons/git.svg",
+  GitHub: "assets/icons/github.svg",
+  "VS Code": "assets/icons/vscode.svg",
+  Postman: "assets/icons/postman.svg",
+  Netlify: "assets/icons/netlify.svg",
+  "Railway awareness": "assets/icons/railway.svg",
+  "Network troubleshooting": "assets/icons/network.svg",
+  "Technical support": "assets/icons/technical-support.svg",
+  "User support": "assets/icons/user-support.svg",
+};
 
-  projectCard.innerHTML = `
-          <img src="${project.image}" alt="${
-    project.title
-  }" class="project-image"/>
-          <div class="project-info">
-              <h3>${project.title}</h3>
-              <p style="height:5rem;">${project.description}</p>
-              <div class="tech-stack">
-                  
-                  ${project.techStack
-                    .map(
-                      (tech, index) =>
-                        `<p class="icon-container" style="transform: translateX(-${
-                          5 * index + 2
-                        }px);">${tech}</p>`
-                    )
-                    .join(" ")}
-                
-              </div>
-              <div class="project-links">
-                  <a href="${project.github}" target="_blank">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="aqua" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                    Code
-                    </a>
-                  <a href="${project.demo}" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="aqua" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-                     Demo
-                  </a>
-              </div>
-            
-          </div>
-      `;
-  projectGrid.appendChild(projectCard);
-});
+function renderIconStack(items, label) {
+  const icons = items
+    .filter((item) => techIconMap[item])
+    .map(
+      (item) =>
+        `<span class="icon-container" title="${item}"><img src="${techIconMap[item]}" alt="${item}" loading="lazy" onerror="handleMissingIcon(this)"></span>`,
+    )
+    .join("");
+
+  if (!icons) return "";
+
+  return `<div class="icon-stack" aria-label="${label}">${icons}</div>`;
+}
+
+function renderSkills() {
+  const skillsGrid = document.getElementById("skills-grid");
+  const noIconCategories = ["Data & AI", "IT & Infrastructure"];
+
+  toolGroups.forEach((group, index) => {
+    const card = document.createElement("article");
+    card.className = "skill-card";
+    card.setAttribute("data-aos", "fade-up");
+    card.setAttribute("data-aos-delay", `${index * 50}`);
+
+    const iconRow = noIconCategories.includes(group.title)
+      ? ""
+      : `<div class="tool-icon-row">
+           ${renderIconStack(group.tools, `${group.title} icons`)}
+         </div>`;
+
+    card.innerHTML = `
+      <h3><span aria-hidden="true">☆</span>${group.title}</h3>
+      <div class="skill-list">
+        ${group.tools.map((tool) => `<span class="skill-pill">${tool}</span>`).join("")}
+      </div>
+      ${iconRow}
+    `;
+    skillsGrid.appendChild(card);
+  });
+}
+
+function renderProjects() {
+  const projectGrid = document.querySelector(".project-grid");
+
+  projects.forEach((project, index) => {
+    const labelStack = project.stack.filter((item) => !techIconMap[item]);
+    const linksMarkup = [
+      project.github
+        ? `<a href="${project.github}" target="_blank" rel="noreferrer"><img src="assets/icons/git.svg" alt="" aria-hidden="true">Code</a>`
+        : "",
+      project.demo
+        ? `<a href="${project.demo}" target="_blank" rel="noreferrer"><img src="assets/icons/link.svg" alt="" aria-hidden="true">Live demo</a>`
+        : "",
+    ].join("");
+
+    const projectCard = document.createElement("article");
+    projectCard.className = "project-card";
+    projectCard.setAttribute("data-aos", "fade-up");
+    projectCard.setAttribute("data-aos-delay", `${index * 55}`);
+    projectCard.innerHTML = `
+      <div class="project-media">
+        <img src="${project.image}" alt="${project.title} preview">
+      </div>
+      <div class="project-body">
+        <div class="project-topline">
+          <h3>${project.title}</h3>
+          <span class="project-status">${project.status}</span>
+        </div>
+        <p>${project.description}</p>
+        <ul class="project-features">
+          ${project.features.map((feature) => `<li>${feature}</li>`).join("")}
+        </ul>
+        <div class="tech-stack" aria-label="${project.title} technology stack">
+          ${renderIconStack(project.stack, `${project.title} technology icons`)}
+          ${
+            labelStack.length
+              ? `<div class="stack-list">
+                  ${labelStack.map((item) => `<span class="stack-tag">${item}</span>`).join("")}
+                </div>`
+              : ""
+          }
+        </div>
+        ${linksMarkup ? `<div class="project-links">${linksMarkup}</div>` : ""}
+      </div>
+    `;
+    projectGrid.appendChild(projectCard);
+  });
+}
+
+function initEmail() {
+  const form = document.querySelector(".contact-form");
+
+  if (!form) return;
+
+  if (window.emailjs) {
+    emailjs.init({
+      publicKey: "qMHmY9ldVNVeksvn2",
+      limitRate: {
+        id: "app",
+        throttle: 15000,
+      },
+    });
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const name = document.querySelector("#username").value.trim();
+    const email = document.querySelector("#email").value.trim();
+    const subject = document.querySelector("#subject").value.trim();
+    const phone = document.querySelector("#phone").value.trim();
+    const message = document.querySelector("#message").value.trim();
+
+    if (!name || !email || !subject || !message) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    if (!window.emailjs) {
+      window.location.href = `mailto:tb.obande@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`${message}\n\nFrom: ${name}\nEmail: ${email}\nPhone: ${phone}`)}`;
+      return;
+    }
+
+    const templateParams = {
+      from_name: name,
+      from_email: email,
+      subject,
+      phone_number: phone,
+      message,
+    };
+
+    emailjs
+      .send("service_dpy3quy", "template_kaeqr8c", templateParams)
+      .then(() => {
+        alert("Your message was sent successfully.");
+        form.reset();
+      })
+      .catch(() => {
+        alert(
+          "Failed to send the message. Please try email or WhatsApp from the contact links.",
+        );
+      });
+  });
+}
+
+function initAnimations() {
+  if (!window.AOS) return;
+
+  document.body.classList.add("aos-ready");
+  AOS.init({
+    once: true,
+    duration: 750,
+    easing: "ease-out-cubic",
+    offset: 80,
+  });
+}
+
+renderSkills();
+renderProjects();
+initEmail();
+initAnimations();

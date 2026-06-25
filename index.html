@@ -1,277 +1,428 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Tom Obande Onyango portfolio - junior software developer focused on full-stack development, data analysis, automation, and fintech solutions."
+    />
+    <title>Tom Obande Onyango | Junior Software Developer</title>
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <body>
+    <div class="page-shell">
+      <header class="header" id="header">
+        <a class="logo" href="#home" aria-label="Tom Obande Onyango home">
+          <span>Tom</span> Obande
+        </a>
 
-  <title>
-    portfolio.com
-  </title>
+        <nav
+          class="nav-links"
+          id="links_container"
+          aria-label="Primary navigation"
+        >
+          <a class="nav-link active-nav-link" href="#home">Home</a>
+          <a class="nav-link" href="#about">About</a>
+          <a class="nav-link" href="#skills">Tools</a>
+          <a class="nav-link" href="#projects">Projects</a>
+          <a class="nav-link" href="#experience">Experience</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </nav>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
+        <button
+          class="menu-toggle"
+          id="menu-btn"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          onclick="openmenu()"
+        >
+          <span></span>
+          <span></span>
+        </button>
+        <button
+          class="menu-toggle close-toggle"
+          id="close"
+          type="button"
+          aria-label="Close menu"
+          aria-expanded="true"
+          onclick="closemenu()"
+        >
+          <span></span>
+          <span></span>
+        </button>
+      </header>
 
-<body>
-
-  <!-- background art -->
-  <div class="bg-art-wrapper"><div class="bg-art"></div></div>
-
-  <!-- header -->
-  <header class="header" id="header">
-    <div class="logo">
-      <p>t<span>browns</p>
-    </div>
-    <div id="links_container">
-      <a id='nav-link' class="active-nav-link" href="#home">Home</a>
-      <a id='nav-link' href="#about">About</a>
-      <a id='nav-link' href="#projects">Projects</a>
-      <a id='nav-link' href="#services">Services</a>
-      <a id='nav-link' href="#contact">Contact</a>
-    </div>
-
-    <!-- Mobile Menu Icon -->
-    <div class="icon">
-      <ion-icon name="menu-outline" id="menu-btn" onclick="openmenu()"></ion-icon>
-      <ion-icon name="close-outline" id="close" onclick="closemenu()"></ion-icon>
-    </div>
-  </header>
-
-  <!-- hero section -->
-  <section class="hero" id="home"> 
-    <div class="hero-grid">
-      <div class="profile-content" data-aos="zoom-in-right" data-aos-duration="1000">
-        <!-- image -->
-        <div class='profile-image'   >
-          <img src="assets/images/file.png">
-        </div>
-      </div>
-      <!-- content -->
-      <div class="hero-content">
-        <h1 data-aos="fade-right" data-aos-duration="1500" data-aos-delay="600" >Tom Obande</h1>
-        <h2 data-aos="fade-left" data-aos-duration="1500" data-aos-delay="600" >I am 
-          <span style="--i:3"data-text='a Web Developer' >a Web Developer</span> 
-          <span style="--i:2" data-text='a UI/UX Designer'>a UI/UX Designer</span> 
-          <span style="--i:1" data-text='an App Developer'>an App Developer</span>
-        </h2>
-        <p data-aos="fade-up" data-aos-duration="1500" data-aos-delay="700" >Building beautiful, functional, and scalable web applications with modern technologies</p>
-
-        <!-- Contact me button -->
-        <div class="btn-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="750" >
-          <a href= "https://wa.me/254794687383" class="btn">Contact me</a>
-        </div>
-      </div>
-      
-  
-    </div>
-
-  </section>
-  
-  <!-- About Section -->
-  <section class="about" id="about">
-    <div class="section-title">ABOUT ME</div>
-    <div class="about-grid">
-      <!-- Bio -->
-      <div class="left" data-aos="fade-right" data-aos-duration="750" >
-        <div class="bio-description">
-          <p>
-            I'm a passionate software developer with a strong foundation in full-stack development and emerging technologies. 
-            Through 2+ years of hands-on project experience and active participation in hackathons, I've developed a knack for 
-            turning complex problems into elegant solutions. My collaborative mindset and adaptability allow me to thrive both 
-            in team settings and independent projects, while my enthusiasm for continuous learning keeps me at the forefront 
-            of technological innovations.
-          </p>
-        </div>
-      </div>
-      <!-- Education, Interests, Skills tabs -->
-      <div class="right" data-aos="fade-left" data-aos-duration="1000">
-        <div class="tabs-wrapper">
-          <div class="tab-titles">
-            <p class="tab-links active-link">Education</p>
-            <p class="tab-links">Interests</p>
-            <p class="tab-links">Skills</p>
-          </div>
-        </div>
-
-          <div class="tab-content active-tab" id="education">
-            <ul>
-              <li>
-                <span>2024</span><br>
-                IBM Data Science Practitioner Course
-                <br>
-                <small>Data Science Practitioner Certificate <a href="assets/Data_Science_Practitioner_Certificate_Badge.pdf"> View</a></small>
-              </li>
-              <li>
-                <span>2021 - Present</span><br>
-                Bachelor of Information Technology, Kenyatta University
-                <br>
-                
-                <small>Focus on software development and emerging technologies</small>
-                
-              </li>
-
-              <li>
-                <span>2017 - 2021</span><br>
-                St.Mary's School, Yala
-                <br>
-                <small>Graduated with a B plus</small>
-              </li>
-            </ul>
-            <!-- Download CV  -->
-            <a href="assets/ONYANGO TOM-CV.pdf" class="download-btn" download="assets/ONYANGO TOM-CV.pdf">
-              Download CV  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-            </a>
+      <main>
+        <section class="hero section-band" id="home">
+          <div class="hero-copy" data-aos="fade-up" data-aos-duration="900">
+            <p class="eyebrow">Junior Software Developer</p>
+            <h1>Tom Obande Onyango</h1>
+            <p class="hero-lead">
+              I build practical web, data, automation, and fintech-focused
+              applications using React, Next.js, Python, FastAPI, Supabase,
+              Firebase, and SQL.
+            </p>
+            <div class="hero-actions" aria-label="Primary actions">
+              <a class="btn primary" href="#projects">
+                <img src="assets/icons/git.svg" alt="" aria-hidden="true" />
+                View Projects
+              </a>
+              <a class="btn" href="assets/ONYANGO TOM-CV.pdf" download>
+                <img src="assets/icons/pdf.svg" alt="" aria-hidden="true" />
+                Download CV
+              </a>
+              <a class="btn quiet" href="#contact">Contact Me</a>
+            </div>
+            <div class="hero-tags" aria-label="Focus areas">
+              <span>Full-stack development</span>
+              <span>Data analysis</span>
+              <span>Digital onboarding</span>
+              <span>Fintech systems</span>
+            </div>
           </div>
 
-          <div class="tab-content" id="interests">
-            <ul>
-              <li><span>Large Language Models</span><br/> 
-                Experienced in fine-tuning and deploying open-source LLMs for practical applications, with a focus on developing custom LLMs from scratch</li>
-              <li><span>Internet of Things</span><br/>  
-                Experimented with a few Arduino-based projects, combining hardware and software to create smart, interactive solutions</li>
-              <li><span>Data Analysis</span><br/>  
-                Proficient in extracting actionable insights from complex datasets, using modern tools and visualization techniques to drive data-informed decisions</li>
-            </ul>
+          <div
+            class="hero-visual"
+            data-aos="zoom-in"
+            data-aos-duration="900"
+            data-aos-delay="150"
+          >
+            <div class="portrait-frame">
+              <img
+                src="assets/images/profile_pic.jpg"
+                alt="Portrait of Tom Obande Onyango"
+              />
+            </div>
+            <div class="orbit-card top-card">
+              <span>Education</span>
+              <strong>Bachelor of Information Technology</strong>
+            </div>
+            <div class="orbit-card bottom-card">
+              <span>Current focus</span>
+              <strong>Web, data, and fintech systems</strong>
+            </div>
           </div>
+        </section>
 
-          <div class="tab-content" id="skills">
-            <ul>
-              <li>
-                <span>Frontend Development</span><br>
-                Modern web applications using TypeScript, React, and Tailwind CSS, with emphasis on responsive design and performance optimization
-              </li>
-
-              <li>
-                <span>Backend Development</span><br>
-                RESTful APIs and server-side applications using Node.js and Python, database management with PostgreSQL, and real-time applications with Firebase
-              </li>
-
-              <li>
-                <span>Development and Operations</span><br>
-                Version control with Git/Github, containerization with Docker.
-              </li>
-            </ul>
+        <section class="about section-band" id="about">
+          <div class="section-heading" data-aos="fade-up">
+            <p class="eyebrow">About</p>
+            <h2>Practical systems, honest learning, useful software.</h2>
           </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="projects">
-    <div class="section-title">PROJECTS</div>
-    
-    <div class="project-grid">
-        <!-- Project cards will be dynamically inserted here by JavaScript -->
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section class="services" id="services">
-    <div class="section-title">SERVICES</div>
-
-    <div class="service-grid" data-aos="fade-up" data-aos-duration="1000">
-      <div class="service-card">
-          <i class="fas fa-laptop-code"></i>
-          <h3>Web Design</h3>
-          <p>Creating and developing websites from scratch based on your requirements. I aim to create beautiful, user-friendly, and optimized websites for both mobile and desktop.</p>
-      </div>
-      <div class="service-card">
-          <i class="fas fa-mobile-alt"></i>
-          <h3>App Development</h3>
-          <p>Developing mobile applications for both Android and iOS using the latest technologies like React Native.</p>
-      </div>
-      <div class="service-card">
-          <i class="fas fa-cogs" style="color: aqua;"></i>
-          <h3>Maintenance and Support</h3>
-          <p>Providing ongoing maintenance and support to ensure your website or app runs smoothly, including updates, bug fixes, and performance optimization.</p>
-      </div>
-  </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="contact">
-      <div class="section-title">CONTACT</div>
-
-    <div class="contact_main" id="contact">
-      <div class="contact_content" data-aos="fade-right" data-aos-duration="1000">
-          <div class="contact_content_img">
-            <img src="assets/images/contact-3018.png">
+          <div class="about-layout">
+            <article
+              class="about-card"
+              data-aos="fade-right"
+              data-aos-duration="800"
+            >
+              <p>
+                I am an Information Technology student at Kenyatta University
+                with a strong interest in full-stack development, data analysis,
+                automation, and fintech solutions. I enjoy building practical
+                applications that solve real problems, from AI-powered study
+                tools and investment app prototypes to web scraping workflows
+                and assistive technology experiments.
+              </p>
+              <p>
+                My hands-on experience includes developing web applications with
+                Next.js, React, Python, FastAPI, Supabase, Firebase, and SQL
+                databases. I also completed an IT attachment at Jaramogi Oginga
+                Odinga University of Science and Technology, where I gained
+                practical exposure to network configuration, computer
+                troubleshooting, and user support.
+              </p>
+            </article>
+            <div
+              class="quick-facts"
+              data-aos="fade-left"
+              data-aos-duration="800"
+            >
+              <div>
+                <span>Location</span>
+                <strong>Nairobi, Kenya</strong>
+              </div>
+              <div>
+                <span>Positioning</span>
+                <strong>Junior software developer</strong>
+              </div>
+              <div>
+                <span>Best fit</span>
+                <strong
+                  >Software, data, fintech, and digital banking teams</strong
+                >
+              </div>
+            </div>
           </div>
-        <h1>Tom Obande</h1>
-        <span>Software Engineer</span><br><br>
-        I am available for freelance work. Contact me anytime via my social media accounts
-        </span></p><br>
-        <span>Phone number :</span>
-        <span class="linkaa">+254794687383</span><br>
+        </section>
 
-        <div class="social_icons">
-          <a href="https://www.instagram.com/tb.obande/">
-            <image src='assets/icons/insta.svg' class="icon-container"/>
-          </a>
+        <section class="skills section-band" id="skills">
+          <div class="section-heading" data-aos="fade-up">
+            <p class="eyebrow">Tools of Trade</p>
+            <h2>
+              Tools I use to design, build, analyze, deploy, and support
+              systems.
+            </h2>
+          </div>
+          <div class="skills-grid" id="skills-grid"></div>
+        </section>
 
-          <a href="https://wa.me/254794687383" class="icon-container">
-            <image src='assets/icons/whatsapp.svg'/>
-          </a>
+        <section class="projects section-band" id="projects">
+          <div class="section-heading" data-aos="fade-up">
+            <p class="eyebrow">Featured Projects</p>
+            <h2>
+              Project work that shows product thinking and implementation.
+            </h2>
+          </div>
+          <div class="project-grid" aria-live="polite"></div>
+        </section>
 
-          <a href = "mailto:tb.obande@gmail.com" class="icon-container">
-            <image src='assets/icons/gmail.svg'/>
-          </a>
+        <section class="experience section-band" id="experience">
+          <div class="section-heading" data-aos="fade-up">
+            <p class="eyebrow">Experience</p>
+            <h2>Workplace exposure and practical learning.</h2>
+          </div>
+          <div class="timeline">
+            <article class="timeline-item" data-aos="fade-up">
+              <div class="timeline-date">May 2024 - August 2024</div>
+              <div class="timeline-content">
+                <h3>
+                  IT Attache - Jaramogi Oginga Odinga University of Science and
+                  Technology
+                </h3>
+                <ul>
+                  <li>
+                    Supported computer troubleshooting and basic IT support
+                    tasks.
+                  </li>
+                  <li>
+                    Helped with local network configuration and troubleshooting.
+                  </li>
+                  <li>
+                    Gained practical exposure to technical support, networking,
+                    user assistance, and workplace IT operations.
+                  </li>
+                </ul>
+              </div>
+            </article>
+            <article class="timeline-item" data-aos="fade-up">
+              <div class="timeline-date">Short practical engagement</div>
+              <div class="timeline-content">
+                <h3>Web Developer Bootcamp - mTek Insurance Broker</h3>
+                <ul>
+                  <li>
+                    Participated in a one-week practical web development
+                    engagement.
+                  </li>
+                  <li>Worked around website and user onboarding ideas.</li>
+                  <li>
+                    Gained exposure to business requirements, digital customer
+                    onboarding, and web development workflows.
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
 
-          <a href="https://www.linkedin.com/in/tom-brown-13811a1a8" class="icon-container">
-            <image src='assets/icons/linkedin.svg'/>
-          </a>
+        <section class="education section-band" id="education">
+          <div class="section-heading" data-aos="fade-up">
+            <p class="eyebrow">Education & Certifications</p>
+            <h2>Academic background and applied learning.</h2>
+          </div>
+          <div class="education-grid">
+            <article class="education-card" data-aos="fade-up">
+              <span>2021 - 2026</span>
+              <h3>Bachelor of Information Technology</h3>
+              <p>Kenyatta University.</p>
+              <p>
+                Relevant areas: software development, databases, web
+                technologies, networks, information systems, data analysis,
+                accounting information systems, and Japanese language basics.
+              </p>
+            </article>
+            <article
+              class="education-card"
+              data-aos="fade-up"
+              data-aos-delay="80"
+            >
+              <span>2024</span>
+              <h3>IBM Data Science - Practitioner</h3>
+              <p>Applied data science foundations and analysis practice.</p>
+              <a
+                href="assets/Data_Science_Practitioner_Certificate_Badge.pdf"
+                target="_blank"
+                rel="noreferrer"
+                >View certificate</a
+              >
+            </article>
+            <article
+              class="education-card"
+              data-aos="fade-up"
+              data-aos-delay="160"
+            >
+              <span>Completed</span>
+              <h3>Power Learn Project Web Technologies</h3>
+              <p>Web development fundamentals and practical implementation.</p>
+            </article>
+          </div>
+        </section>
 
-      </div>
-      </div>
-      
-      <!-- contact form -->
-      <div class="form" data-aos="fade-left" data-aos-duration="1000" >
-        <form>
-          <label> your name</label><br>
-          <input type="text" name="name" id="username" ><br>
-          <label > Email</label><br>
-          <input type="email" name="email" id="email"><br>
-          <label> subject</label><br>
-          <input type="text" name="subject" id="subject"><br>
-          <label> phone number</label><br>
-          <input type="number" maxlength="10" name="phone" id="phone"><br>
-          <label> your message</label><br>
-          <textarea name="message" id="message"></textarea><br>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+        <section class="contact section-band" id="contact">
+          <div class="contact-card" data-aos="fade-up">
+            <div class="contact-info">
+              <div class="contact-copy">
+                <p class="eyebrow">Contact</p>
+                <h2>
+                  Let us talk about junior developer, data, web, or fintech
+                  opportunities.
+                </h2>
+                <p>
+                  I am open to internship, junior developer, software
+                  engineering, data, fintech, and digital banking opportunities.
+                </p>
+              </div>
 
+              <div class="contact-info-list">
+                <a class="contact-info-card" href="mailto:tb.obande@gmail.com">
+                  <span class="contact-info-icon">
+                    <img
+                      src="assets/icons/email.png"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span>
+                    <span class="contact-info-label">Email</span>
+                    <strong>tb.obande@gmail.com</strong>
+                  </span>
+                </a>
+
+                <a
+                  class="contact-info-card"
+                  href="https://wa.me/254794687383"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span class="contact-info-icon">
+                    <img
+                      src="assets/icons/phone.png"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span>
+                    <span class="contact-info-label">Phone</span>
+                    <strong>0797687383</strong>
+                  </span>
+                </a>
+
+                <div class="contact-info-card">
+                  <span class="contact-info-icon">
+                    <img
+                      src="assets/icons/location.png"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <span>
+                    <span class="contact-info-label">Location</span>
+                    <strong>Nairobi, Kenya</strong>
+                  </span>
+                </div>
+              </div>
+
+              <div class="contact-socials" aria-label="Social links">
+                <a
+                  href="https://github.com/tbrowns"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="GitHub"
+                >
+                  <img src="assets/icons/git.svg" alt="" aria-hidden="true" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/tom-brown-13811a1a8"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <img
+                    src="assets/icons/linkedin.svg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </a>
+                <a href="mailto:tb.obande@gmail.com" aria-label="Email">
+                  <img src="assets/icons/gmail.svg" alt="" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+
+            <form class="contact-form">
+              <div class="contact-form-grid">
+                <div class="form-field">
+                  <label for="username">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    id="username"
+                    autocomplete="name"
+                    required
+                  />
+                </div>
+
+                <div class="form-field">
+                  <label for="email">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    autocomplete="email"
+                    required
+                  />
+                </div>
+
+                <div class="form-field full-width">
+                  <label for="subject">Subject</label>
+                  <input type="text" name="subject" id="subject" required />
+                </div>
+
+                <div class="form-field full-width muted-field">
+                  <label for="phone">Phone number</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    autocomplete="tel"
+                  />
+                </div>
+
+                <div class="form-field full-width">
+                  <label for="message">Message</label>
+                  <textarea name="message" id="message" required></textarea>
+                </div>
+              </div>
+
+              <button type="submit">Send Message</button>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>Copyright &copy; 2026 Tom Obande Onyango. All rights reserved.</p>
+        <a href="#home">Back to top</a>
+      </footer>
     </div>
-  </section>
 
-  <footer class="footer">  
-    <div>
-      <p>Copyright @2024. All Rights Reserved.</p>
-      <p>Designed by <span> Tom Obande</span></p>
-    </div>
-
-  </footer>
-
-  
-  <!-- EmailJS for sending emails -->
-  <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"> 
-  </script>
-  <!-- aos script for scroll animations -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> 
-  <script src="script.js"></script>
-
-  <!-- Ionicons -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomudule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-</body>
-
-<grammarly-desktop-integration data-grammarly-shadow-root="true">
-</grammarly-desktop-integration>
-
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
