@@ -296,10 +296,10 @@ function renderProjects() {
     const labelStack = project.stack.filter((item) => !techIconMap[item]);
     const linksMarkup = [
       project.github
-        ? `<a href="${project.github}" target="_blank" rel="noreferrer"><img src="assets/icons/git.svg" alt="" aria-hidden="true">Code</a>`
+        ? `<a href="${project.github}" target="_blank" rel="noreferrer"><img src="assets/icons/git.svg" alt="" aria-hidden="true"></a>`
         : "",
       project.demo
-        ? `<a href="${project.demo}" target="_blank" rel="noreferrer"><img src="assets/icons/link.svg" alt="" aria-hidden="true">Live demo</a>`
+        ? `<a href="${project.demo}" target="_blank" rel="noreferrer"><img src="assets/icons/link.svg" alt="" aria-hidden="true"></a>`
         : "",
     ].join("");
 
@@ -313,8 +313,11 @@ function renderProjects() {
       </div>
       <div class="project-body">
         <div class="project-topline">
-          <h3>${project.title}</h3>
-          <span class="project-status">${project.status}</span>
+          <div class="project-title-group">
+            <h3>${project.title}</h3>
+            <span class="project-status">${project.status}</span>
+          </div>
+          ${linksMarkup ? `<div class="project-links">${linksMarkup}</div>` : ""}
         </div>
         <p>${project.description}</p>
         <ul class="project-features">
@@ -330,7 +333,7 @@ function renderProjects() {
               : ""
           }
         </div>
-        ${linksMarkup ? `<div class="project-links">${linksMarkup}</div>` : ""}
+        
       </div>
     `;
     projectGrid.appendChild(projectCard);
