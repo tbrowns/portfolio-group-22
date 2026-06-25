@@ -835,13 +835,41 @@ button {
 }
 
 .contact-info-card strong {
-  display: block;
+  display: inline;
   margin-top: 0.15rem;
   color: var(--text);
   font-size: clamp(0.98rem, 1.45vw, 1.15rem);
   font-weight: 600;
   line-height: 1.25;
   overflow-wrap: anywhere;
+}
+
+.contact-info-card > span:not(.contact-info-icon) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.contact-info-card > span:not(.contact-info-icon) > strong,
+.contact-info-card > span:not(.contact-info-icon) > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact-info-card span:last-child img[src*="copy"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0.6;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  cursor: pointer;
+}
+
+.contact-info-card span:last-child img[src*="copy"]:hover {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 .contact-socials {
@@ -938,12 +966,28 @@ button {
 }
 
 .contact-form button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
   min-height: 3.2rem;
   border: 0;
   border-radius: var(--radius);
   background: var(--accent);
   color: #101316;
   font-weight: 700;
+}
+
+.contact-form button span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-form button img {
+  width: 1.2rem;
+  height: 1.2rem;
+  object-fit: contain;
 }
 
 .contact-form button:hover {

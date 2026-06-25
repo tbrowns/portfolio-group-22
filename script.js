@@ -408,7 +408,55 @@ function initAnimations() {
   });
 }
 
+function initCopyButtons() {
+  const copyButtons = document.querySelectorAll(
+    ".contact-info-card span:last-child img[src*='copy']",
+  );
+
+  copyButtons.forEach((button) => {
+    button.parentElement.style.cursor = "pointer";
+
+    button.parentElement.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Get the text to copy (the strong element's text content)
+      const contactCard = button.closest(".contact-info-card");
+      const textToCopy = contactCard.querySelector("strong").textContent;
+
+      // Copy to clipboard
+      navigator.clipboard
+        .writeText(textToCopy)
+        .then(() => {
+          // Show visual feedback
+          const originalSrc = button.src;
+          button.src = "assets/icons/check.png"; // Assuming you have a check icon
+
+          // Reset after 2 seconds
+          setTimeout(() => {
+            button.src = originalSrc;
+          }, 2000);
+        })
+        .catch(() => {
+          // Fallback for older browsers
+          const textarea = document.createElement("textarea");
+          textarea.value = textToCopy;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+
+          const originalSrc = button.src;
+          button.src = "assets/icons/check.png";
+          setTimeout(() => {
+            button.src = originalSrc;
+          }, 2000);
+        });
+    });
+  });
+}
+
 renderSkills();
 renderProjects();
 initEmail();
+initCopyButtons();
 initAnimations();
