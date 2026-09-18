@@ -122,7 +122,7 @@ const projects = [
   },
   {
     title: "VendorConnect Ecommerce App",
-    status: "Deployed",
+    status: "Project",
     description:
       "Developed a vendor-focused ecommerce platform for listing products, managing inventory-style flows, and supporting customer purchasing experiences.",
     image: "assets/images/vendor-connect-preview.png",
@@ -134,7 +134,6 @@ const projects = [
     ],
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
     github: "https://github.com/tbrowns/e-commerce",
-    demo: "https://vendor-connect-delta.vercel.app/",
   },
   {
     title: "Wine Store Management App",
