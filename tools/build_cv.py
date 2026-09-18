@@ -88,7 +88,8 @@ for label, items in [
 
 head("PROFESSIONAL EXPERIENCE")
 F.append(Paragraph("Web Developer Bootcamp Participant / Trainee Developer", item_s))
-F.append(Paragraph("mTek Insurance Broker | Nairobi, Kenya | One-week engagement", meta_s))
+F.append(Paragraph("mTek Insurance Broker | Nairobi, Kenya | June 2025 (one-week engagement)",
+                   meta_s))
 bullets([
     "Supported development of website user onboarding, contributing to a smoother sign-up and "
     "customer information capture experience.",
