@@ -1,0 +1,12 @@
+# core.autocrlf is true on this machine, so mark binary assets explicitly:
+# without this git applies line-ending conversion by heuristic and can corrupt them.
+* text=auto
+
+*.pdf  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.woff binary
+*.woff2 binary
