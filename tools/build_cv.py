@@ -12,6 +12,37 @@ from reportlab.lib.units import mm
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
 
+# The built CV is served publicly from the portfolio site, and the site has no
+# robots.txt, so anything in it is scrapable. Referees consented to being
+# referees, not to having their mobile numbers indexed -- so the published
+# version names them without contact details.
+#
+# For a version to attach directly to an application, run:
+#     python tools/build_cv.py --with-referee-contacts
+# It writes beside the public one and is git-ignored; do not commit it.
+import json
+import os
+import sys
+
+INCLUDE_REFEREE_CONTACTS = "--with-referee-contacts" in sys.argv
+
+# Names and titles are safe to publish. Phone numbers and emails are NOT, and
+# this repo is public, so they live in an untracked file rather than in source
+# -- committing them here would put them in GitHub code search.
+REFEREES = [
+    ("Benard Amukah", "Partner, KPMG East Africa"),
+    ("Nehemiah Atubwa",
+     "Director of ICT, Jaramogi Oginga Odinga University of Science and Technology"),
+]
+
+CONTACTS = {}
+if INCLUDE_REFEREE_CONTACTS:
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "referees.local.json")
+    if not os.path.exists(path):
+        sys.exit("Missing %s -- it holds the referee phone numbers and emails and is "
+                 "deliberately untracked. See the comment above." % path)
+    CONTACTS = json.load(open(path, encoding="utf-8"))
+
 INK, MUTED, RULE = colors.HexColor("#15181c"), colors.HexColor("#4a5058"), colors.HexColor("#b9c0c8")
 
 name_s = ParagraphStyle("name", fontName="Helvetica-Bold", fontSize=19, leading=22,
@@ -122,13 +153,6 @@ for title, url, shown, text in [
      "github.com/tbrowns/drip_orch_platform",
      "Dividend reinvestment simulator for the Nairobi Securities Exchange: scrapes live NSE quotes, "
      "tracks dividend history, models reinvestment over time. FastAPI, SQLAlchemy, JWT auth."),
-    ("Finly", "https://github.com/tbrowns/finly_platform", "github.com/tbrowns/finly_platform",
-     "AI financial controller. Normalises monthly Zoho books into PostgreSQL, then runs deterministic "
-     "checks for cash-flow risk, fraud indicators and reconciliation; the model explains but never "
-     "determines. FastAPI, Neon PostgreSQL, Groq."),
-    ("Gesture World", "https://github.com/tbrowns/gesture-world", "github.com/tbrowns/gesture-world",
-     "Sign language recognition with speech synthesis: MediaPipe hand-landmark detection, "
-     "scikit-learn classification, Azure Cognitive Services output."),
 ]:
     F.append(Paragraph("%s &nbsp;&nbsp;<font size=8 color='#4a5058'>%s</font>"
                        % (title, link(url, shown)), item_s))
@@ -146,7 +170,20 @@ head("CERTIFICATIONS")
 F.append(Paragraph("IBM Data Science Practitioner &nbsp;|&nbsp; "
                    "IBM Enterprise Design Thinking Practitioner", body_s))
 
-OUT = "assets/Tom_Onyango.pdf"
+head("REFERENCES")
+for who, what in REFEREES:
+    F.append(Paragraph("%s &nbsp;&nbsp;<font size=8 color='#4a5058'>%s</font>" % (who, what), item_s))
+    if INCLUDE_REFEREE_CONTACTS:
+        c = CONTACTS.get(who, {})
+        bits = [c["phone"]] if c.get("phone") else []
+        if c.get("email"):
+            bits.append(link("mailto:" + c["email"], c["email"]))
+        F.append(Paragraph(" &nbsp;|&nbsp; ".join(bits), body_s))
+if not INCLUDE_REFEREE_CONTACTS:
+    F.append(Paragraph("Contact details available on request.", body_s))
+
+OUT = ("assets/Tom_Onyango_referees.pdf" if INCLUDE_REFEREE_CONTACTS
+       else "assets/Tom_Onyango.pdf")
 SimpleDocTemplate(OUT, pagesize=A4, title="Tom Obande Onyango - CV",
                   author="Tom Obande Onyango", subject="Curriculum Vitae",
                   leftMargin=16 * mm, rightMargin=16 * mm,
