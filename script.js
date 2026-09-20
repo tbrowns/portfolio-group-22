@@ -106,6 +106,46 @@ const toolGroups = [
 
 const projects = [
   {
+    title: "ShambaLens AI",
+    status: "Tested",
+    description:
+      "Built evidence-first crop triage that ranks up to three competing causes from a photo instead of forcing a single label. It asks up to three questions chosen to separate the leaders, then runs an independent verification pass and deterministic safety guardrails before a plan reaches the farmer.",
+    image: "assets/images/shambalens-preview.png",
+    features: [
+      "Image quality gating before any analysis runs",
+      "Ranked differential showing supporting and contradicting evidence",
+      "Follow-up questions picked to separate the leading causes",
+      "Deterministic guardrails that strip unsafe chemical instructions",
+      "Backend and frontend suites run in CI against live PostgreSQL",
+    ],
+    stack: [
+      "FastAPI",
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Firebase",
+      "Vision models",
+      "RAG",
+    ],
+    github: "https://github.com/tbrowns/shambalens-ai",
+  },
+  {
+    title: "DRIP Orchestrator",
+    status: "Project",
+    description:
+      "Built a dividend reinvestment simulator for the Nairobi Securities Exchange that models what reinvested dividends actually compound into, accounting for Kenya's 5% withholding tax, brokerage and exchange levies, and the fact that the NSE has no fractional shares.",
+    image: "assets/images/drip-preview.png",
+    features: [
+      "Scheduled NSE quote scraping and dividend history tracking",
+      "Multi-period compounding projection across one to forty years",
+      "Whole-share purchases with leftover cash carried forward",
+      "Side-by-side comparison against not reinvesting",
+      "Expo client over a JWT-authenticated FastAPI service",
+    ],
+    stack: ["Python", "FastAPI", "SQLAlchemy", "PostgreSQL", "React Native"],
+    github: "https://github.com/tbrowns/drip_orch_platform",
+  },
+  {
     title: "Mindbase",
     status: "Deployed",
     description:
@@ -196,7 +236,6 @@ const techIconMap = {
   "Data analysis": "assets/icons/data-analysis.svg",
   Visualization: "assets/icons/visualization.svg",
   Embeddings: "assets/icons/embeddings.svg",
-  RAG: "assets/icons/rag.svg",
   BeautifulSoup: "assets/icons/beautifulsoup.svg",
   Scrapy: "assets/icons/scrapy.svg",
   MediaPipe: "assets/icons/mediapipe.svg",
