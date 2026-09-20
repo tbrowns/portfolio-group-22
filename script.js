@@ -106,6 +106,22 @@ const toolGroups = [
 
 const projects = [
   {
+    title: "Mindbase",
+    status: "Deployed",
+    description:
+      "Built an internal knowledge assistant that answers questions with source citations. It masks personal data before anything is stored, indexes documents to a vector database, and filters retrieved passages for relevance before the model writes an answer.",
+    image: "assets/images/mindbase-preview.png",
+    features: [
+      "Retrieval-augmented answers with cited sources",
+      "Personal data masking before storage",
+      "Relevance filtering ahead of generation",
+      "Workspace accounts with per-document privacy",
+    ],
+    stack: ["Next.js", "TypeScript", "Firebase", "Pinecone", "Groq"],
+    github: "https://github.com/tbrowns/mind-base",
+    demo: "https://mind-base-nine.vercel.app",
+  },
+  {
     title: "AI-Powered Study Assistant",
     status: "Prototype",
     description:
@@ -118,7 +134,7 @@ const projects = [
       "Supabase database integration and Firebase Storage",
     ],
     stack: ["Next.js", "TypeScript", "Supabase", "Firebase", "Python"],
-    github: "https://github.com/tbrowns/moscore-web-app.git",
+    github: "https://github.com/tbrowns/moscore-web-app",
   },
   {
     title: "VendorConnect Ecommerce App",
@@ -150,54 +166,6 @@ const projects = [
     stack: ["HTML", "CSS", "JavaScript", "Firebase"],
     github: "https://github.com/tbrowns/wines-spirits",
     demo: "https://winesapp.netlify.app/",
-  },
-  {
-    title: "HisaFlow Kenyan Shares MVP",
-    status: "MVP concept",
-    description:
-      "Designed and started building a Kenyan shares investment MVP focused on simple onboarding, amount-based share buying, portfolio tracking, and disciplined monthly investing.",
-    image: "assets/images/Screenshot 2024-11-27 151105.png",
-    features: [
-      "ID and KRA PIN onboarding concept",
-      "Mock CDS account flow",
-      "Amount-based share buying",
-      "Dividend and monthly investing concepts",
-    ],
-    stack: [
-      "React Native",
-      "NativeWind",
-      "FastAPI",
-      "PostgreSQL",
-      "SQLAlchemy",
-    ],
-  },
-  {
-    title: "Sign Language Recognition Prototype",
-    status: "Prototype",
-    description:
-      "Developed a sign language recognition prototype using MediaPipe hand landmarks and machine learning to explore assistive communication tools.",
-    image: "assets/images/contact-3018.png",
-    features: [
-      "Hand landmark detection",
-      "Gesture class dataset structure",
-      "RandomForest classifier experiments",
-      "Streamlit UI and speech experiments",
-    ],
-    stack: ["Python", "MediaPipe", "scikit-learn", "Streamlit", "OpenCV"],
-  },
-  {
-    title: "Job Scraper API Workflow",
-    status: "Project",
-    description:
-      "Built scraping workflows and API endpoints to collect, clean, and expose structured job listing data from public job sources.",
-    image: "assets/images/file.png",
-    features: [
-      "Scrapy spiders",
-      "BeautifulSoup and Requests workflows",
-      "Data cleaning and JSON export",
-      "FastAPI endpoint for structured listings",
-    ],
-    stack: ["Python", "FastAPI", "Pandas", "JSON"],
   },
 ];
 
