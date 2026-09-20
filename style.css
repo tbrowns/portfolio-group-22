@@ -267,7 +267,8 @@ button {
 
 .btn > img,
 .contact-links a > img,
-.project-links a > img {
+.project-links a > img,
+.project-links a > svg {
   width: 1.85rem;
   height: 1.85rem;
   padding: 0.38rem;
@@ -517,6 +518,16 @@ button {
   overflow: hidden;
 }
 
+/*
+ * The `hidden` attribute is only `display: none` in the user-agent stylesheet,
+ * so the `display: grid` above quietly beat it and every "hidden" card stayed
+ * on screen - which is why the reveal button appeared to do nothing. Author
+ * rules have to opt back in.
+ */
+.project-card[hidden] {
+  display: none;
+}
+
 .project-media {
   position: relative;
   aspect-ratio: 16 / 10;
@@ -650,22 +661,17 @@ button {
   object-fit: contain;
 }
 
-.icon-stack .stack-tag {
-  margin-left: 0.45rem;
+/* Black-only line art, which would otherwise be ink on ink. */
+.icon-img--invert {
+  filter: invert(1);
 }
 
-.icon-stack .stack-tag:first-child {
-  margin-left: 0;
-}
-
-.icon-fallback-tag {
-  align-self: center;
-}
-
-.stack-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
+/* Logos that ship their own full-bleed background: round them off and let
+ * them fill a little more of the circle so they read as a badge. */
+.icon-img--plate {
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 0.4rem;
 }
 
 .project-links {
@@ -686,7 +692,8 @@ button {
   font-weight: 800;
 }
 
-.project-links a > img {
+.project-links a > img,
+.project-links a > svg {
   width: 2rem;
   height: 2rem;
   padding: 0.42rem;
@@ -1207,13 +1214,10 @@ button {
 }
 
 .project-reveal-icon {
-  width: 1rem;
-  height: 1rem;
-  transition: transform 0.25s ease;
-}
-
-.project-reveal-btn[aria-expanded="true"] .project-reveal-icon {
-  transform: rotate(180deg);
+  width: 1.05rem;
+  height: 1.05rem;
+  color: var(--accent);
+  flex: 0 0 auto;
 }
 
 /*
@@ -1247,8 +1251,5 @@ button {
 @media (prefers-reduced-motion: reduce) {
   .project-card--revealed {
     animation: none;
-  }
-  .project-reveal-icon {
-    transition: none;
   }
 }

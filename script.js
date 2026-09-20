@@ -36,11 +36,13 @@ window.addEventListener("scroll", () => {
   }
 });
 
+/**
+ * An icon that fails to load is removed outright rather than swapped for a
+ * text pill. A row of logos with one word wedged into it reads as a mistake,
+ * and the stack is already spelled out in the project copy.
+ */
 function handleMissingIcon(img) {
-  const fallback = document.createElement("span");
-  fallback.className = "stack-tag icon-fallback-tag";
-  fallback.textContent = img.alt;
-  img.closest(".icon-container").replaceWith(fallback);
+  img.closest(".icon-container")?.remove();
 }
 
 const toolGroups = [
@@ -232,12 +234,8 @@ const techIconMap = {
   Firebase: "assets/icons/firebase.svg",
   SQLAlchemy: "assets/icons/sqlalchemy.svg",
   Pandas: "assets/icons/pandas.svg",
-  "Data cleaning": "assets/icons/data-cleaning.svg",
-  "Data analysis": "assets/icons/data-analysis.svg",
-  Visualization: "assets/icons/visualization.svg",
-  Embeddings: "assets/icons/embeddings.svg",
-  BeautifulSoup: "assets/icons/beautifulsoup.svg",
-  Scrapy: "assets/icons/scrapy.svg",
+  RAG: "assets/icons/rag.png",
+  Groq: "assets/icons/groq.svg",
   MediaPipe: "assets/icons/mediapipe.svg",
   OpenCV: "assets/icons/opencv.svg",
   "scikit-learn": "assets/icons/scikit-learn.svg",
@@ -249,18 +247,39 @@ const techIconMap = {
   Postman: "assets/icons/postman.svg",
   Netlify: "assets/icons/netlify.svg",
   "Railway awareness": "assets/icons/railway.svg",
-  "Network troubleshooting": "assets/icons/network.svg",
-  "Technical support": "assets/icons/technical-support.svg",
-  "User support": "assets/icons/user-support.svg",
+};
+
+/**
+ * Icons that would disappear or look wrong on the dark circle behind them.
+ * "invert" is for black-only line art, which is otherwise ink on ink;
+ * "plate" is for logos that carry their own full-bleed background, which need
+ * a rounded corner so they read as a badge rather than a clipped square.
+ */
+const iconTreatment = {
+  RAG: "invert",
+  SQLAlchemy: "invert",
+  NativeWind: "invert",
+  Groq: "plate",
 };
 
 function renderIconStack(items, label) {
+  const seen = new Set();
   const icons = items
-    .filter((item) => techIconMap[item])
-    .map(
-      (item) =>
-        `<span class="icon-container" title="${item}"><img src="${techIconMap[item]}" alt="${item}" loading="lazy" onerror="handleMissingIcon(this)"></span>`,
-    )
+    .filter((item) => {
+      // Several skills share one icon ("REST APIs" and "API integration" are
+      // both api.svg). Repeating it in the row reads as a rendering bug, and
+      // the pills above already spell out the full list.
+      const src = techIconMap[item];
+      if (!src || seen.has(src)) return false;
+      seen.add(src);
+      return true;
+    })
+    .map((item) => {
+      const treatment = iconTreatment[item]
+        ? ` icon-img--${iconTreatment[item]}`
+        : "";
+      return `<span class="icon-container" title="${item}"><img class="icon-img${treatment}" src="${techIconMap[item]}" alt="${item}" loading="lazy" onerror="handleMissingIcon(this)"></span>`;
+    })
     .join("");
 
   if (!icons) return "";
@@ -295,6 +314,13 @@ function renderSkills() {
   });
 }
 
+/**
+ * lucide link. Inline rather than an <img> so the stroke picks up the anchor's
+ * accent colour - the old flat box-arrow was dark grey on a dark badge and
+ * barely registered as a control.
+ */
+const LINK_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
+
 /** How many project cards show before the visitor asks for more. */
 const VISIBLE_PROJECT_COUNT = 3;
 
@@ -306,13 +332,12 @@ function renderProjects() {
 
   projects.forEach((project, index) => {
     const isExtra = index >= VISIBLE_PROJECT_COUNT;
-    const labelStack = project.stack.filter((item) => !techIconMap[item]);
     const linksMarkup = [
       project.github
-        ? `<a href="${project.github}" target="_blank" rel="noreferrer"><img src="assets/icons/git.svg" alt="" aria-hidden="true"></a>`
+        ? `<a href="${project.github}" target="_blank" rel="noreferrer" aria-label="${project.title} source on GitHub"><img src="assets/icons/git.svg" alt="" aria-hidden="true"></a>`
         : "",
       project.demo
-        ? `<a href="${project.demo}" target="_blank" rel="noreferrer"><img src="assets/icons/link.svg" alt="" aria-hidden="true"></a>`
+        ? `<a href="${project.demo}" target="_blank" rel="noreferrer" aria-label="${project.title} live demo">${LINK_ICON}</a>`
         : "",
     ].join("");
 
@@ -351,13 +376,6 @@ function renderProjects() {
         </ul>
         <div class="tech-stack" aria-label="${project.title} technology stack">
           ${renderIconStack(project.stack, `${project.title} technology icons`)}
-          ${
-            labelStack.length
-              ? `<div class="stack-list">
-                  ${labelStack.map((item) => `<span class="stack-tag">${item}</span>`).join("")}
-                </div>`
-              : ""
-          }
         </div>
       </div>
     `;
@@ -367,6 +385,39 @@ function renderProjects() {
   if (extraCards.length) {
     mountProjectToggle(projectGrid, extraCards);
   }
+}
+
+/** lucide chevrons-down / chevrons-up, as path data. */
+const CHEVRONS = {
+  down: ["m7 6 5 5 5-5", "m7 13 5 5 5-5"],
+  up: ["m17 11-5-5-5 5", "m17 18-5-5-5 5"],
+};
+
+const SVG_NS = "http://www.w3.org/2000/svg";
+
+/** An inline SVG, not an <img>: only inline markup can inherit currentColor. */
+function chevrons() {
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("fill", "none");
+  svg.setAttribute("stroke", "currentColor");
+  svg.setAttribute("stroke-width", "2");
+  svg.setAttribute("stroke-linecap", "round");
+  svg.setAttribute("stroke-linejoin", "round");
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("focusable", "false");
+  svg.classList.add("project-reveal-icon");
+  svg.append(
+    document.createElementNS(SVG_NS, "path"),
+    document.createElementNS(SVG_NS, "path"),
+  );
+  return svg;
+}
+
+function setChevrons(svg, [top, bottom]) {
+  const [a, b] = svg.querySelectorAll("path");
+  a.setAttribute("d", top);
+  b.setAttribute("d", bottom);
 }
 
 /**
@@ -387,26 +438,24 @@ function mountProjectToggle(projectGrid, extraCards) {
   button.setAttribute("aria-controls", extraCards.map((card) => card.id).join(" "));
 
   const label = document.createElement("span");
-  const icon = document.createElement("img");
-  icon.src = "assets/icons/link.svg";
-  icon.alt = "";
-  icon.setAttribute("aria-hidden", "true");
-  icon.className = "project-reveal-icon";
-
-  const countLabel = (expanded) =>
-    expanded
-      ? "Show fewer projects"
-      : `Show ${extraCards.length} more project${extraCards.length === 1 ? "" : "s"}`;
-
-  label.textContent = countLabel(false);
+  const icon = chevrons();
   button.append(icon, label);
+
+  const paint = (expanded) => {
+    label.textContent = expanded ? "Show less" : "Show more";
+    // Two distinct glyphs rather than one rotated 180deg: chevrons-up is not
+    // chevrons-down upside down, the arrowheads stack the other way.
+    setChevrons(icon, expanded ? CHEVRONS.up : CHEVRONS.down);
+  };
+
+  paint(false);
   wrap.appendChild(button);
   projectGrid.insertAdjacentElement("afterend", wrap);
 
   button.addEventListener("click", () => {
     const expanding = button.getAttribute("aria-expanded") !== "true";
     button.setAttribute("aria-expanded", String(expanding));
-    label.textContent = countLabel(expanding);
+    paint(expanding);
 
     if (expanding) {
       extraCards.forEach((card, index) => {
