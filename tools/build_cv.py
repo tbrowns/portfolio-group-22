@@ -145,7 +145,7 @@ for title, url, shown, text in [
     ("ShambaLens AI", "https://github.com/tbrowns/shambalens-ai", "github.com/tbrowns/shambalens-ai",
      "Evidence-first crop triage: ranks up to three competing causes from a photo rather than forcing "
      "one label, then verifies independently before presenting a plan. FastAPI, Next.js and "
-     "PostgreSQL; 19 automated tests, CI against live PostgreSQL."),
+     "PostgreSQL; 207 backend and 19 frontend tests, CI against live PostgreSQL."),
     ("Mindbase", "https://github.com/tbrowns/mind-base", "github.com/tbrowns/mind-base",
      "Internal knowledge assistant answering with source citations. Masks personal data, indexes to "
      "Pinecone, filters retrieved chunks for relevance before generation. Next.js, Firestore, Groq."),
