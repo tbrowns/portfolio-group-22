@@ -1192,3 +1192,63 @@ button {
     align-items: flex-start;
   }
 }
+
+/* --- Projects: show three, reveal the rest on request ------------------- */
+
+.project-reveal {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.project-reveal-btn {
+  cursor: pointer;
+  font: inherit;
+}
+
+.project-reveal-icon {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.25s ease;
+}
+
+.project-reveal-btn[aria-expanded="true"] .project-reveal-icon {
+  transform: rotate(180deg);
+}
+
+/*
+ * The hidden cards animate themselves rather than through AOS: AOS pins an
+ * element at opacity 0 until it scrolls into view, and these are revealed in
+ * place, below the fold the visitor has already passed.
+ */
+.project-card--revealed {
+  /*
+   * "backwards" rather than "both": the 0% frame (opacity 0) is applied during
+   * the stagger delay, and once the animation ends the card simply falls back
+   * to its own style instead of being pinned by a forwards fill. Same end
+   * result, one less thing overriding the cascade.
+   */
+  animation: project-reveal 0.42s ease backwards;
+  /* --reveal-order is set per card in JS so they cascade. */
+  animation-delay: calc(var(--reveal-order, 0) * 70ms);
+}
+
+@keyframes project-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card--revealed {
+    animation: none;
+  }
+  .project-reveal-icon {
+    transition: none;
+  }
+}

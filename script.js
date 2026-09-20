@@ -288,10 +288,17 @@ function renderSkills() {
   });
 }
 
+/** How many project cards show before the visitor asks for more. */
+const VISIBLE_PROJECT_COUNT = 3;
+
 function renderProjects() {
   const projectGrid = document.querySelector(".project-grid");
+  if (!projectGrid) return;
+
+  const extraCards = [];
 
   projects.forEach((project, index) => {
+    const isExtra = index >= VISIBLE_PROJECT_COUNT;
     const labelStack = project.stack.filter((item) => !techIconMap[item]);
     const linksMarkup = [
       project.github
@@ -304,11 +311,24 @@ function renderProjects() {
 
     const projectCard = document.createElement("article");
     projectCard.className = "project-card";
-    projectCard.setAttribute("data-aos", "fade-up");
-    projectCard.setAttribute("data-aos-delay", `${index * 55}`);
+
+    if (isExtra) {
+      // Deliberately no data-aos on the hidden cards. AOS holds an element at
+      // opacity 0 until it scrolls into view, and an element revealed by a
+      // button has already been scrolled past - it would unhide as a blank
+      // box. These animate themselves via .project-card--revealed instead.
+      projectCard.classList.add("project-card--extra");
+      projectCard.id = `project-extra-${index}`;
+      projectCard.hidden = true;
+      extraCards.push(projectCard);
+    } else {
+      projectCard.setAttribute("data-aos", "fade-up");
+      projectCard.setAttribute("data-aos-delay", `${index * 55}`);
+    }
+
     projectCard.innerHTML = `
       <div class="project-media">
-        <img src="${project.image}" alt="${project.title} preview">
+        <img src="${project.image}" alt="${project.title} preview" loading="lazy">
       </div>
       <div class="project-body">
         <div class="project-topline">
@@ -332,10 +352,75 @@ function renderProjects() {
               : ""
           }
         </div>
-        
       </div>
     `;
     projectGrid.appendChild(projectCard);
+  });
+
+  if (extraCards.length) {
+    mountProjectToggle(projectGrid, extraCards);
+  }
+}
+
+/**
+ * Show the remaining projects behind a button.
+ *
+ * The cards are rendered into the DOM either way and only hidden, so the
+ * markup stays crawlable and Ctrl+F finds them once expanded - the button is
+ * about first impressions, not about withholding the work.
+ */
+function mountProjectToggle(projectGrid, extraCards) {
+  const wrap = document.createElement("div");
+  wrap.className = "project-reveal";
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "btn project-reveal-btn";
+  button.setAttribute("aria-expanded", "false");
+  button.setAttribute("aria-controls", extraCards.map((card) => card.id).join(" "));
+
+  const label = document.createElement("span");
+  const icon = document.createElement("img");
+  icon.src = "assets/icons/link.svg";
+  icon.alt = "";
+  icon.setAttribute("aria-hidden", "true");
+  icon.className = "project-reveal-icon";
+
+  const countLabel = (expanded) =>
+    expanded
+      ? "Show fewer projects"
+      : `Show ${extraCards.length} more project${extraCards.length === 1 ? "" : "s"}`;
+
+  label.textContent = countLabel(false);
+  button.append(icon, label);
+  wrap.appendChild(button);
+  projectGrid.insertAdjacentElement("afterend", wrap);
+
+  button.addEventListener("click", () => {
+    const expanding = button.getAttribute("aria-expanded") !== "true";
+    button.setAttribute("aria-expanded", String(expanding));
+    label.textContent = countLabel(expanding);
+
+    if (expanding) {
+      extraCards.forEach((card, index) => {
+        card.hidden = false;
+        // Stagger without a timer: a custom property drives the CSS delay, so
+        // collapsing mid-animation cannot leave a stray callback behind.
+        card.style.setProperty("--reveal-order", String(index));
+        card.classList.add("project-card--revealed");
+      });
+    } else {
+      // Move focus out before hiding, or it lands on a hidden element and the
+      // browser drops it to <body> - losing the reader's place on the page.
+      if (extraCards.some((card) => card.contains(document.activeElement))) {
+        button.focus();
+      }
+      extraCards.forEach((card) => {
+        card.classList.remove("project-card--revealed");
+        card.hidden = true;
+      });
+      wrap.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
   });
 }
 
