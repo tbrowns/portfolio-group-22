@@ -48,9 +48,12 @@ body {
       rgba(48, 231, 194, 0.12),
       transparent 24rem
     ),
+    /* This was amber (rgba(241, 193, 91, .12)) and read as an orange wash over
+     * the right of the hero, which fought the aqua everything else uses. Same
+     * glow, on-palette. */
     radial-gradient(
       circle at 86% 18%,
-      rgba(241, 193, 91, 0.12),
+      rgba(48, 231, 194, 0.09),
       transparent 22rem
     ),
     linear-gradient(145deg, #0c0f12 0%, #14181c 45%, #101316 100%);
@@ -243,26 +246,87 @@ button {
   overflow-wrap: break-word;
 }
 
-.hero-actions,
-.hero-tags {
+.hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   align-items: center;
 }
 
+/*
+ * Replaces the focus-area word chips. Those restated the lead paragraph
+ * directly above them; these are three things a reader can actually act on.
+ * Kept as a list because that is what it is.
+ */
+.hero-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.1rem;
+  list-style: none;
+}
+
+.hero-social a {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.hero-social a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(48, 231, 194, 0.55);
+}
+
+.hero-social img {
+  width: 1.3rem;
+  height: 1.3rem;
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-social a {
+    transition: none;
+  }
+  .hero-social a:hover {
+    transform: none;
+  }
+}
+
+/*
+ * These have to read as actions, not labels. The toolkit chips are the same
+ * dark surface with a faint border and an inline icon, so at a glance a
+ * secondary button was indistinguishable from something you cannot click.
+ *
+ * Two things separate them now: shape (8px against the chips' 999px) and an
+ * accent-tinted border and label, which no chip has.
+ */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 3rem;
   gap: 0.55rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--line);
+  padding: 0.75rem 1.25rem;
+  border: 1px solid rgba(48, 231, 194, 0.4);
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text);
+  background: rgba(48, 231, 194, 0.07);
+  color: var(--accent);
   font-weight: 800;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.btn:hover {
+  border-color: rgba(48, 231, 194, 0.75);
+  background: rgba(48, 231, 194, 0.12);
 }
 
 .btn > img,
@@ -288,9 +352,6 @@ button {
   color: #07110f;
 }
 
-.btn.quiet {
-  color: var(--accent);
-}
 
 .btn:hover,
 .contact-links a:hover,
@@ -298,9 +359,7 @@ button {
   transform: translateY(-2px);
 }
 
-.hero-tags span,
-.project-status,
-.stack-tag {
+.project-status {
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0.4rem 0.7rem;
@@ -357,7 +416,9 @@ button {
 
 .orbit-card span {
   display: block;
-  color: var(--accent-2);
+  /* Was --accent-2, the amber. With the hero wash back on palette this label
+   * was the only warm thing left on the page and read as a stray. */
+  color: var(--accent);
   font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
