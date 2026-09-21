@@ -287,9 +287,32 @@ function renderIconStack(items, label) {
   return `<div class="icon-stack" aria-label="${label}">${icons}</div>`;
 }
 
+/**
+ * One chip per tool, icon and label together.
+ *
+ * These cards used to carry a separate row of unlabelled logos underneath the
+ * pills, which said nothing the pills had not already said - the same tools,
+ * twice, the second time without names. In a project card an icon row earns
+ * its place because the card is dense with prose and the stack has no other
+ * representation; here the list IS the content.
+ *
+ * Tools with no icon simply render as a plain chip. A mixed row reads fine -
+ * the label carries the meaning either way.
+ */
+function renderSkillPill(tool) {
+  const src = techIconMap[tool];
+  if (!src) return `<span class="skill-pill">${tool}</span>`;
+
+  const treatment = iconTreatment[tool]
+    ? ` skill-pill-icon--${iconTreatment[tool]}`
+    : "";
+  // On error the icon removes itself and the label stays, which is the whole
+  // advantage of labelling these over the bare stacks in the project cards.
+  return `<span class="skill-pill"><img class="skill-pill-icon${treatment}" src="${src}" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()">${tool}</span>`;
+}
+
 function renderSkills() {
   const skillsGrid = document.getElementById("skills-grid");
-  const noIconCategories = ["Data & AI", "IT & Infrastructure"];
 
   toolGroups.forEach((group, index) => {
     const card = document.createElement("article");
@@ -297,18 +320,11 @@ function renderSkills() {
     card.setAttribute("data-aos", "fade-up");
     card.setAttribute("data-aos-delay", `${index * 50}`);
 
-    const iconRow = noIconCategories.includes(group.title)
-      ? ""
-      : `<div class="tool-icon-row">
-           ${renderIconStack(group.tools, `${group.title} icons`)}
-         </div>`;
-
     card.innerHTML = `
       <h3><span aria-hidden="true">☆</span>${group.title}</h3>
       <div class="skill-list">
-        ${group.tools.map((tool) => `<span class="skill-pill">${tool}</span>`).join("")}
+        ${group.tools.map(renderSkillPill).join("")}
       </div>
-      ${iconRow}
     `;
     skillsGrid.appendChild(card);
   });

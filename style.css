@@ -453,9 +453,13 @@ button {
 
 .skill-card {
   display: grid;
-  grid-template-rows: auto auto 1fr;
-  gap: 1.35rem;
-  min-height: 14.2rem;
+  /* Heading, then pills. The third row held a separate strip of unlabelled
+   * logos that repeated the pills without their names. */
+  grid-template-rows: auto 1fr;
+  gap: 1.1rem;
+  /* Was 14.2rem, sized for the old third row. Cards in a row still equalise
+   * through the grid, so this only stops the sparse ones sitting half empty. */
+  min-height: 10.5rem;
   align-content: stretch;
   background: linear-gradient(
     145deg,
@@ -484,24 +488,44 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  /* This row is the grid's 1fr, so without these the pills stretch to fill the
+   * leftover height - and a 999px radius turns a stretched pill into a large
+   * oval. Most obvious in the sparse cards. */
+  align-items: flex-start;
+  align-content: flex-start;
 }
 
 .skill-pill {
-  padding: 0.42rem 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0.4rem 0.7rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   color: rgba(245, 247, 244, 0.88);
   background: rgba(255, 255, 255, 0.045);
   box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.035);
   font-size: 0.88rem;
-  font-weight: 800;
+  /* 800 was doing a heading's job on what is really a label, and at this size
+   * it thickened into a smudge. 600 still reads as deliberate. */
+  font-weight: 600;
 }
 
-.tool-icon-row {
-  align-self: end;
-  min-height: 2.9rem;
-  display: flex;
-  align-items: flex-end;
+.skill-pill-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+/* Black-only line art, invisible against the dark chip. */
+.skill-pill-icon--invert {
+  filter: invert(1);
+}
+
+/* Logos carrying their own full-bleed background read better with a soft corner. */
+.skill-pill-icon--plate {
+  border-radius: 3px;
 }
 
 .project-grid {
