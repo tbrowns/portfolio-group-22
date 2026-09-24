@@ -109,7 +109,7 @@ const toolGroups = [
 const projects = [
   {
     title: "ShambaLens AI",
-    status: "Tested",
+    status: "Deployed",
     description:
       "Built evidence-first crop triage that ranks up to three competing causes from a photo instead of forcing a single label. It asks up to three questions chosen to separate the leaders, then runs an independent verification pass and deterministic safety guardrails before a plan reaches the farmer.",
     image: "assets/images/shambalens-preview.png",
@@ -130,6 +130,7 @@ const projects = [
       "RAG",
     ],
     github: "https://github.com/tbrowns/shambalens-ai",
+    demo: "https://shambalens-ai-rcwb.vercel.app",
   },
   {
     title: "DRIP Orchestrator",
@@ -564,49 +565,41 @@ function initAnimations() {
   });
 }
 
+const COPY_ICON =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+const CHECK_ICON =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
+function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+  // Older browsers and non-secure origins have no async clipboard.
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
+  return Promise.resolve();
+}
+
 function initCopyButtons() {
-  const copyButtons = document.querySelectorAll(
-    ".contact-info-card span:last-child img[src*='copy']",
-  );
+  document.querySelectorAll(".copy-btn[data-copy]").forEach((button) => {
+    const label = button.getAttribute("aria-label");
+    button.innerHTML = COPY_ICON;
 
-  copyButtons.forEach((button) => {
-    button.parentElement.style.cursor = "pointer";
-
-    button.parentElement.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      // Get the text to copy (the strong element's text content)
-      const contactCard = button.closest(".contact-info-card");
-      const textToCopy = contactCard.querySelector("strong").textContent;
-
-      // Copy to clipboard
-      navigator.clipboard
-        .writeText(textToCopy)
-        .then(() => {
-          // Show visual feedback
-          const originalSrc = button.src;
-          button.src = "assets/icons/check.png"; // Assuming you have a check icon
-
-          // Reset after 2 seconds
-          setTimeout(() => {
-            button.src = originalSrc;
-          }, 2000);
-        })
-        .catch(() => {
-          // Fallback for older browsers
-          const textarea = document.createElement("textarea");
-          textarea.value = textToCopy;
-          document.body.appendChild(textarea);
-          textarea.select();
-          document.execCommand("copy");
-          document.body.removeChild(textarea);
-
-          const originalSrc = button.src;
-          button.src = "assets/icons/check.png";
-          setTimeout(() => {
-            button.src = originalSrc;
-          }, 2000);
-        });
+    button.addEventListener("click", () => {
+      copyText(button.dataset.copy).then(() => {
+        button.innerHTML = CHECK_ICON;
+        button.classList.add("copied");
+        button.setAttribute("aria-label", "Copied");
+        setTimeout(() => {
+          button.innerHTML = COPY_ICON;
+          button.classList.remove("copied");
+          button.setAttribute("aria-label", label);
+        }, 2000);
+      });
     });
   });
 }

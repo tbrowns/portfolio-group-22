@@ -318,7 +318,7 @@ button {
   border-radius: var(--radius);
   background: rgba(48, 231, 194, 0.07);
   color: var(--accent);
-  font-weight: 800;
+  font-weight: 500;
   transition:
     border-color 0.2s ease,
     background 0.2s ease;
@@ -329,7 +329,6 @@ button {
   background: rgba(48, 231, 194, 0.12);
 }
 
-.btn > img,
 .contact-links a > img,
 .project-links a > img,
 .project-links a > svg {
@@ -344,6 +343,13 @@ button {
     -4px -4px 10px rgba(255, 255, 255, 0.035),
     inset 1px 1px 0 rgba(255, 255, 255, 0.08);
   object-fit: contain;
+}
+
+.btn > img,
+.btn > svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  flex: none;
 }
 
 .btn.primary {
@@ -897,19 +903,19 @@ button {
   width: 3.15rem;
   height: 3.15rem;
   flex: 0 0 3.15rem;
-  border: 1px solid rgba(48, 231, 194, 0.18);
+  border: 1px solid rgba(48, 231, 194, 0.32);
   border-radius: 999px;
-  background: rgba(48, 231, 194, 0.1);
+  background: rgba(48, 231, 194, 0.12);
   box-shadow:
     8px 8px 18px rgba(0, 0, 0, 0.35),
     inset 1px 1px 0 rgba(255, 255, 255, 0.06);
   color: var(--accent);
 }
 
-.contact-info-icon img {
-  width: 1.3rem;
-  height: 1.3rem;
-  object-fit: contain;
+.contact-info-icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  color: var(--accent);
 }
 
 .contact-info-icon.text-icon {
@@ -926,8 +932,9 @@ button {
   text-transform: uppercase;
 }
 
-.contact-info-card strong {
-  display: inline;
+.contact-info-card strong,
+.contact-info-text a {
+  display: block;
   margin-top: 0.15rem;
   color: var(--text);
   font-size: clamp(0.98rem, 1.45vw, 1.15rem);
@@ -936,32 +943,46 @@ button {
   overflow-wrap: anywhere;
 }
 
-.contact-info-card > span:not(.contact-info-icon) {
+.contact-info-text a:hover {
+  color: var(--accent);
+}
+
+.contact-info-text {
   display: flex;
+  flex: 1;
+  min-width: 0;
   flex-direction: column;
   gap: 0.15rem;
 }
 
-.contact-info-card > span:not(.contact-info-icon) > strong,
-.contact-info-card > span:not(.contact-info-icon) > span:last-child {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.contact-info-card span:last-child img[src*="copy"] {
-  width: 1.5rem;
-  height: 1.5rem;
-  opacity: 0.6;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+.copy-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  flex: none;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
   cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
-.contact-info-card span:last-child img[src*="copy"]:hover {
-  opacity: 1;
-  transform: scale(1.1);
+.copy-btn svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.copy-btn:hover,
+.copy-btn:focus-visible,
+.copy-btn.copied {
+  border-color: rgba(48, 231, 194, 0.45);
+  background: rgba(48, 231, 194, 0.1);
+  color: var(--accent);
 }
 
 .contact-socials {
@@ -1252,7 +1273,8 @@ button {
     flex-basis: 3rem;
   }
 
-  .contact-info-card strong {
+  .contact-info-card strong,
+  .contact-info-text a {
     font-size: 1rem;
   }
 
