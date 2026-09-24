@@ -112,7 +112,7 @@ const projects = [
     status: "Deployed",
     description:
       "Built evidence-first crop triage that ranks up to three competing causes from a photo instead of forcing a single label. It asks up to three questions chosen to separate the leaders, then runs an independent verification pass and deterministic safety guardrails before a plan reaches the farmer.",
-    image: "assets/images/shambalens-preview.png",
+    image: "assets/images/shambalens-preview.webp",
     features: [
       "Image quality gating before any analysis runs",
       "Ranked differential showing supporting and contradicting evidence",
@@ -129,15 +129,16 @@ const projects = [
       "Vision models",
       "RAG",
     ],
+    outcome:
+      "Live on Vercel with a Neon PostgreSQL database, backed by 207 automated backend tests.",
     github: "https://github.com/tbrowns/shambalens-ai",
     demo: "https://shambalens-ai-rcwb.vercel.app",
   },
   {
     title: "DRIP Orchestrator",
-    status: "Project",
     description:
       "Built a dividend reinvestment simulator for the Nairobi Securities Exchange that models what reinvested dividends actually compound into, accounting for Kenya's 5% withholding tax, brokerage and exchange levies, and the fact that the NSE has no fractional shares.",
-    image: "assets/images/drip-preview.png",
+    image: "assets/images/drip-preview.webp",
     features: [
       "Scheduled NSE quote scraping and dividend history tracking",
       "Multi-period compounding projection across one to forty years",
@@ -146,6 +147,8 @@ const projects = [
       "Expo client over a JWT-authenticated FastAPI service",
     ],
     stack: ["Python", "FastAPI", "SQLAlchemy", "PostgreSQL", "React Native"],
+    outcome:
+      "40 automated tests on the simulator backend, plus a React Native companion app with 30 of its own.",
     github: "https://github.com/tbrowns/drip_orch_platform",
   },
   {
@@ -153,7 +156,7 @@ const projects = [
     status: "Deployed",
     description:
       "Built an internal knowledge assistant that answers questions with source citations. It masks personal data before anything is stored, indexes documents to a vector database, and filters retrieved passages for relevance before the model writes an answer.",
-    image: "assets/images/mindbase-preview.png",
+    image: "assets/images/mindbase-preview.webp",
     features: [
       "Retrieval-augmented answers with cited sources",
       "Personal data masking before storage",
@@ -161,15 +164,16 @@ const projects = [
       "Workspace accounts with per-document privacy",
     ],
     stack: ["Next.js", "TypeScript", "Firebase", "Pinecone", "Groq"],
+    outcome:
+      "Live on Vercel with 78 automated tests, including the access rules that keep each workspace's documents and chats private.",
     github: "https://github.com/tbrowns/mind-base",
     demo: "https://mind-base-nine.vercel.app",
   },
   {
     title: "AI-Powered Study Assistant",
-    status: "Prototype",
     description:
       "Built a NotebookLM-style study assistant that helps students organize notebooks, upload documents, and ask questions from their own study materials using retrieval-augmented generation.",
-    image: "assets/images/moscore-preview.png",
+    image: "assets/images/moscore-preview.webp",
     features: [
       "Notebook creation and editing",
       "PDF upload and text processing",
@@ -181,10 +185,9 @@ const projects = [
   },
   {
     title: "VendorConnect Ecommerce App",
-    status: "Project",
     description:
       "Developed a vendor-focused ecommerce platform for listing products, managing inventory-style flows, and supporting customer purchasing experiences.",
-    image: "assets/images/vendor-connect-preview.png",
+    image: "assets/images/vendor-connect-preview.webp",
     features: [
       "Product listing experience",
       "Vendor dashboard concept",
@@ -199,7 +202,7 @@ const projects = [
     status: "Deployed",
     description:
       "Created a Firebase-powered management app for tracking wine and spirits purchases, stock, payment status, and purchase history.",
-    image: "assets/images/wine-app-preview.png",
+    image: "assets/images/wine-app-preview.webp",
     features: [
       "Purchase history tracking",
       "Stock and product views",
@@ -383,11 +386,12 @@ function renderProjects() {
         <div class="project-topline">
           <div class="project-title-group">
             <h3>${project.title}</h3>
-            <span class="project-status">${project.status}</span>
+            ${project.status ? `<span class="project-status">${project.status}</span>` : ""}
           </div>
           ${linksMarkup ? `<div class="project-links">${linksMarkup}</div>` : ""}
         </div>
         <p>${project.description}</p>
+        ${project.outcome ? `<p class="project-outcome">${project.outcome}</p>` : ""}
         <ul class="project-features">
           ${project.features.map((feature) => `<li>${feature}</li>`).join("")}
         </ul>
