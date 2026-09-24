@@ -162,10 +162,11 @@ const projects = [
       "Personal data masking before storage",
       "Relevance filtering ahead of generation",
       "Workspace accounts with per-document privacy",
+      "One-click demo with no sign-up, in a private sandbox workspace",
     ],
     stack: ["Next.js", "TypeScript", "Firebase", "Pinecone", "Groq"],
     outcome:
-      "Live on Vercel with 78 automated tests, including the access rules that keep each workspace's documents and chats private.",
+      "Live on Vercel with 80 automated tests, including the access rules that keep each workspace's documents and chats private.",
     github: "https://github.com/tbrowns/mind-base",
     demo: "https://mind-base-nine.vercel.app",
   },
